@@ -1,0 +1,20 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" />
+      <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+        Invalid email.
+      </div>
+    </div>
+    
+    <div>
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" />
+      <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+        Password is required.
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+  </form>
+  <router-outlet></router-outlet>
