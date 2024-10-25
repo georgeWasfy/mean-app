@@ -19,6 +19,7 @@ export class UsersService {
         data: { user: doc },
       };
     } catch (error) {
+      console.log("🚀 ~ UsersService ~ error:", error)
       throw new BadRequestException("Cant Create a User")
     }
   }

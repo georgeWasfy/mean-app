@@ -5,12 +5,14 @@ const validateEmail = function (email: string) {
   return re.test(email);
 };
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 
@@ -23,30 +25,11 @@ export class User {
 
   @Prop({ required: true })
   password: string;
+
+  @Prop({ required: false })
+  hashedRt: string;
 }
 const UserSchema = SchemaFactory.createForClass(User);
 
-// Pre-save hook to hash the password
-UserSchema.pre<UserDocument>('save', async function (next) {
-  if (!this.isModified('password')) return next(); // Only hash if password is new or modified
-
-  const salt = await bcrypt.genSalt(10); // Generate a salt
-  this.password = await bcrypt.hash(this.password, salt); // Hash the password
-  next();
-});
-
-// // Method to generate a hash from plain text
-// UserSchema.methods.createHash = async function (plainTextPassword: string) {
-//   const saltRounds = 10;
-//   const salt = await bcrypt.genSalt(saltRounds);
-//   return await bcrypt.hash(plainTextPassword, salt);
-// };
-
-// // Validating the candidate password with stored hash and hash function
-// UserSchema.methods.validatePassword = async function (
-//   candidatePassword: string
-// ) {
-//   return await bcrypt.compare(candidatePassword, this.password);
-// };
 
 export default UserSchema;

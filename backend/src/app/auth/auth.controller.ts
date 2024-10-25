@@ -10,8 +10,8 @@ import {
   SignUpType,
   Tokens,
 } from './dto/auth.schema';
-import { ValidationPipe } from '@base/pipes/validation.pipe';
 import { GetCurrentUser } from './decorator/current-user.decorator';
+import { ValidationPipe } from '../pipes/validation.pipe';
 
 @Controller({ version: '1', path: 'auth' })
 export class AuthController {
@@ -41,7 +41,7 @@ export class AuthController {
   }
 
   @Post('/local/logout')
-  localLogOut(@GetCurrentUser('sub') userId: number) {
+  localLogOut(@GetCurrentUser('sub') userId: string) {
     return this.authService.localLogOut(userId);
   }
 
@@ -53,7 +53,7 @@ export class AuthController {
     @GetCurrentUser('refreshToken') refreshToken: string,
     @Res({ passthrough: true }) response: Response,
   ): Promise<Partial<Tokens>> {
-    const tokens = await this.authService.refreshTokens(+userId, refreshToken);
+    const tokens = await this.authService.refreshTokens(userId, refreshToken);
     response.cookie('refresh-token', tokens.refresh_token, { httpOnly: true });
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Allow-Credentials', 'true');
