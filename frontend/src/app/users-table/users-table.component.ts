@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { User, UsersService } from './users.service';
 import { MatTableModule } from '@angular/material/table';
+import { HeaderComponent } from '../header/header.component';
 @Component({
   selector: 'app-users-table',
   standalone: true,
-  imports: [CommonModule,MatTableModule],
+  imports: [CommonModule, MatTableModule, HeaderComponent],
   templateUrl: './users-table.component.html',
   styleUrl: './users-table.component.css',
 })
