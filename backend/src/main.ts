@@ -13,6 +13,15 @@ import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
+  const options = {
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+    allowedHeaders: 'Content-Type, Accept,Authorization',
+  };
+  app.enableCors(options);
   app.setGlobalPrefix(globalPrefix);
   app.enableVersioning({ type: VersioningType.URI });
   const reflector = new Reflector();
