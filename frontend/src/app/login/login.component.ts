@@ -27,7 +27,12 @@ export class LoginComponent {
       password: ['', [Validators.required]],
     });
   }
-
+  ngOnInit(): void {
+    const token = this.authService.getToken()
+    if (token) {
+      this.router.navigate(['/home']);
+    }
+  }
   async onSubmit(): Promise<void> {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
