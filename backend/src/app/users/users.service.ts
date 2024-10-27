@@ -36,7 +36,7 @@ export class UsersService {
     try {
       const docCount = await this.userModel.collection.countDocuments();
 
-      const users = await this.userModel.find().skip(offset).limit(limit);
+      const users = await this.userModel.find().skip(offset).limit(limit).select(["_id","name","email"]);
       return {
         meta: {
           total: docCount,
