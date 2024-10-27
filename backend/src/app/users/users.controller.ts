@@ -1,21 +1,10 @@
 import {
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UsePipes,
   Query,
-  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import {
-  CreateUserSchema,
-  CreateUserType,
-  UpdateUserSchema,
-  UpdateUserType,
   UserQuerySchema,
   UserQueryType,
 } from './dto/user.schema';
@@ -26,32 +15,11 @@ import { TransformationPipe } from '../pipes/transformation.pipe';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  @UsePipes(new ValidationPipe(CreateUserSchema))
-  async create(@Body() createUserDto: CreateUserType) {
-    return await this.usersService.create(createUserDto);
-  }
-
   @Get()
   async findAll(
     @Query(new TransformationPipe(), new ValidationPipe(UserQuerySchema))
-    query: UserQueryType,
+    query: UserQueryType
   ) {
-    // return await this.usersService.list(query.paging);
+    return await this.usersService.list(query.paging);
   }
-
-
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body(new ValidationPipe(UpdateUserSchema)) updateUserDto: UpdateUserType,
-  ) {
-    // return await this.usersService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-    // return await this.usersService.remove(+id);
-  }
-
 }
