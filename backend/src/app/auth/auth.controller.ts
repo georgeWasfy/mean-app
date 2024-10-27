@@ -37,7 +37,14 @@ export class AuthController {
     const tokens = await this.authService.localSignIn(signinDto);
     const { refresh_token, password, hashedRt, ...user } = tokens;
     response.cookie('refresh_token', tokens.refresh_token, { httpOnly: true });
-    return { user };
+    return {
+      user: {
+        access_token: user.access_token,
+        id: user._doc._id,
+        name: user._doc.name,
+        email: user._doc.email,
+      },
+    };
   }
 
   @Post('/local/logout')

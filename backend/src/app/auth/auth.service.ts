@@ -89,8 +89,7 @@ export class AuthService {
     let tokens = { access_token: '', refresh_token: '' };
     try {
       const userByEmail = await this.userModel
-        .findOne({ email: signinDto.email })
-        .exec();
+        .findOne({ email: signinDto.email }) as any
 
       if (userByEmail) {
         const matchPasswords = await bcrypt.compare(
