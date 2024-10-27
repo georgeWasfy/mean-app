@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,10 +11,11 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  signup(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, { email, password });
+  async signup(email: string, password: string, name: string): Promise<any> {
+    return await firstValueFrom(
+      this.http.post(`${this.apiUrl}/signup`, { email, password, name })
+    );
   }
-
   async login(email: string, password: string): Promise<any> {
     return await firstValueFrom(
       this.http.post<any>(this.apiUrl + '/signin', { email, password })
