@@ -8,15 +8,24 @@ export interface User {
   email: string;
 }
 
+export interface PaginatedResponse {
+  meta: {
+    total: number;
+    current_page: number;
+    per_page: number;
+  };
+  data: User[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'http://localhost:3000/api/v1/users';
 
   constructor(private http: HttpClient) {}
 
-  fetchUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+  fetchUsers(): Observable<PaginatedResponse> {
+    return this.http.get<PaginatedResponse>(this.apiUrl);
   }
 }

@@ -22,7 +22,7 @@ export class UsersTableComponent implements OnInit {
 
   loadUsers(): void {
     this.usersService.fetchUsers().subscribe((users) => {
-      this.dataSource = users;
+      this.dataSource = users.data;
     });
   }
 }

@@ -1,11 +1,11 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
 export const jwtInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log('Interceptor invoked');
   let token: string | null = localStorage.getItem('access_token');
+  const router = new Router();
 
-  console.log('Token from localStorage:', token);
   if (token) {
     const clonedRequest = req.clone({
       setHeaders: {
@@ -17,6 +17,9 @@ export const jwtInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
+            console.log('here');
+            localStorage.removeItem('access_token');
+            router.navigate(['/login']);
             console.error('Unauthorized request:', err);
           } else {
             console.error('HTTP error:', err);
@@ -30,6 +33,7 @@ export const jwtInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
     );
   } else {
     console.log('no token');
+    router.navigate(['/login']);
     return next(req);
   }
 };
