@@ -70,6 +70,12 @@ export class AuthService {
 
   async localSignUp(signupDto: SignUpType): Promise<Tokens> {
     try {
+      const userExist = await this.userModel.findOne({
+        email: signupDto.email,
+      });
+      if (userExist) {
+        throw new BadRequestException('Email is already used');
+      }
       const hashedPassword = await this.hashPassword(signupDto.password);
       signupDto.password = hashedPassword;
       const createdUser = await this.userService.create(signupDto);
@@ -81,7 +87,7 @@ export class AuthService {
       await this.updateRtHash(createdUser.data.user._id.toString(), tokens.refresh_token);
       return tokens;
     } catch (error) {
-      throw new BadRequestException('Unable to create User');
+      throw error;
     }
   }
 
