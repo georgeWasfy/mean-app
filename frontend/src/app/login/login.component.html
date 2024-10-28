@@ -15,10 +15,12 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <div>
                 <label class="text-gray-800 text-sm mb-2 block" for="email">Email</label>
-                <div class="relative flex items-center mb-4">
+                <div class="relative  items-center mb-4">
                   <input id="email" formControlName="email" type="email" required class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600" placeholder="Enter email" />
                   <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-                    Invalid email.
+                    <div class="text-red-800 text-sm mb-2 block">
+                      {{ getErrorMessage('email') }}
+                    </div>
                   </div>
                 </div>
                 
@@ -26,10 +28,12 @@
             
               <div>
                 <label class="text-gray-800 text-sm mb-2 block" for="password">Password</label>
-                <div class="relative flex items-center mb-4">
+                <div class="relative  items-center mb-4">
                   <input id="password" type="password" formControlName="password" required class="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600" placeholder="Enter password" />
                   <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-                    Password is required.
+                    <div class="text-red-800 text-sm mb-2 block">
+                      {{ getErrorMessage('password') }}
+                    </div>
                   </div>
                 </div>
               </div>
