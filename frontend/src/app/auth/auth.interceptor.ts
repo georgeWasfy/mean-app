@@ -17,7 +17,6 @@ export const jwtInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
-            console.log('here');
             localStorage.removeItem('access_token');
             router.navigate(['/login']);
             console.error('Unauthorized request:', err);
@@ -32,8 +31,9 @@ export const jwtInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
       })
     );
   } else {
-    console.log('no token');
-    router.navigate(['/login']);
+    if (router.url !== '/login' && router.url !== '/signup') {
+      router.navigate(['/login']);
+    }
     return next(req);
   }
 };
