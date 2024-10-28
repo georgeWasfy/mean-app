@@ -21,7 +21,9 @@
             <label class="text-gray-800 text-sm mb-2 block" for="name">Name</label>
             <input name="name" type="text" required class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500" placeholder="Enter name" id="name" formControlName="name" />
             <div *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
-              Invalid UserName.
+              <div class="text-red-800 text-sm mb-2 block">
+                {{ getErrorMessage('name') }}
+              </div>
             </div>
           </div>
 
@@ -29,7 +31,9 @@
             <label class="text-gray-800 text-sm mb-2 block" for="email">Email</label>
             <input id="email" formControlName="email" name="email" type="email" required class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500" placeholder="Enter email"  />
             <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
-              Invalid email.
+              <div class="text-red-800 text-sm mb-2 block">
+                {{ getErrorMessage('email') }}
+              </div>
             </div>
           </div>
 
@@ -37,7 +41,9 @@
             <label class="text-gray-800 text-sm mb-2 block" for="password">Password</label>
             <input name="password" type="password" required class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500" placeholder="Enter password"  id="password" type="password" formControlName="password" />
             <div *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
-              Password is required.
+              <div class="text-red-800 text-sm mb-2 block">
+                {{ getErrorMessage('password') }}
+              </div>
             </div>
           </div>
 

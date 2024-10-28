@@ -4,6 +4,7 @@ import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import tokenConfig from './config/token.config';
+import { env } from './utils/env';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import tokenConfig from './config/token.config';
       isGlobal: true,
       load: [tokenConfig],
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/project', {}),
+    MongooseModule.forRoot(env('DB'), {}),
     UserModule,
     AuthModule,
   ],
