@@ -10,11 +10,11 @@
 ## How to run
 
 ```sh
-npx nx serve frontend
+npx nx serve frontend --skip-nx-cache
 ```
 
 ```sh
-npx nx serve backend
+npx nx serve backend --skip-nx-cache
 ```
 
 Browse to  [http://localhost:4200/](http://localhost:4200/)
